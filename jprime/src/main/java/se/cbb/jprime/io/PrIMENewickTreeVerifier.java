@@ -184,10 +184,13 @@ public class PrIMENewickTreeVerifier {
 		// Verify arc times.
 		if (at != null) {
 			// Estimate allowed time diff.
-			NewickVertex v = vertices.get(vertices.size()-1);
 			max_time_diff = 0.0;
-			while (v != vertices.get(0)) {
-				max_time_diff += at[v.getNumber()];
+			for (int i = vertices.size()-1; i > 0; --i) {
+				// Is this correct?   /Joel
+				NewickVertex v = vertices.get(i);
+				if (max_time_diff < at[v.getNumber()]) {
+					max_time_diff = at[v.getNumber()];
+				}
 			}
 			max_time_diff *= MAX_REL_TIME_DIFF;
 			
